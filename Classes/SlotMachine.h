@@ -2,13 +2,14 @@
 #include "GAF.h"
 #include "SlotBar.h"
 
-class SlotMachine
+class SlotMachine : public cocos2d::Ref
 {
     enum class EMachineState : uint16_t
     {
         Initial = 0,
         ArmTouched,
         Spin,
+        SpinEnd,
         Win,
         End,
 
@@ -16,9 +17,12 @@ class SlotMachine
     };
 
 public:
-    SlotMachine(gaf::GAFObject* mainObject);
+    static SlotMachine* create(gaf::GAFObject* mainObject);
+
+    SlotMachine();
     ~SlotMachine();
 
+    bool init(gaf::GAFObject* mainObject);
     void update(float dt);
 
     void start();
@@ -33,4 +37,6 @@ private:
     EMachineState m_state;
 
     void nextState();
+
+    float m_countdown;
 };

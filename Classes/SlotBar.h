@@ -1,11 +1,19 @@
 #include "cocos2d.h"
 #include "GAF.h"
 
-class SlotBar
+USING_NS_GAF;
+
+class SlotBar : public cocos2d::Ref
 {
 public:
-    SlotBar(gaf::GAFObject* mainObject);
+    static SlotBar* create(GAFObject* mainObject);
+
+    SlotBar();
+    bool init(GAFObject* mainObject);
+
+    GAFObject* getBar();
 
 private:
-    gaf::GAFObject* m_slots[3];
+    GAFObject* m_slots[3];
+    GAFObject* m_bar;
 };

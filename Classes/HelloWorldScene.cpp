@@ -75,11 +75,21 @@ bool HelloWorld::init()
         white->gotoAndStop("whiteenter");
     }
     addChild(machine, 1);
-    m_machine = new SlotMachine(machine);
-    
+    m_machine = SlotMachine::create(machine);
+    if (m_machine)
+    {
+        m_machine->retain();
+    }
+
+    Director::getInstance()->getScheduler()->scheduleUpdate(this, 1, false);
+
     return true;
 }
 
+void HelloWorld::update(float dt)
+{
+    m_machine->update(dt);
+}
 
 void HelloWorld::menuCloseCallback(Ref* pSender)
 {
