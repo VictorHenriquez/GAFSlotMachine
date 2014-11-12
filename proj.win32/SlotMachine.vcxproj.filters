@@ -10,6 +10,9 @@
     <Filter Include="resource">
       <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\SlotMachine">
+      <UniqueIdentifier>{a2bb1d68-54fa-48a6-bbaf-d6814f13679e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -21,6 +24,12 @@
     <ClCompile Include="..\Classes\HelloWorldScene.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\SlotMachine.cpp">
+      <Filter>Classes\SlotMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SlotBar.cpp">
+      <Filter>Classes\SlotMachine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -31,6 +40,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\HelloWorldScene.h">
       <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SlotMachine.h">
+      <Filter>Classes\SlotMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SlotBar.h">
+      <Filter>Classes\SlotMachine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

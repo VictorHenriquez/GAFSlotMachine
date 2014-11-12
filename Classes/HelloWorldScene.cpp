@@ -1,5 +1,6 @@
 #include "HelloWorldScene.h"
 #include "GAF.h"
+#include "SlotMachine.h"
 
 USING_NS_CC;
 USING_NS_GAF;
@@ -74,6 +75,7 @@ bool HelloWorld::init()
         white->gotoAndStop("whiteenter");
     }
     addChild(machine, 1);
+    m_machine = new SlotMachine(machine);
     
     return true;
 }
@@ -86,7 +88,7 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
     return;
 #endif
 
-    Director::getInstance()->end();
+    m_machine->start();
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);

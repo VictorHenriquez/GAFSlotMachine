@@ -3,6 +3,8 @@
 
 #include "cocos2d.h"
 
+class SlotMachine;
+
 class HelloWorld : public cocos2d::Layer
 {
 public:
@@ -17,6 +19,9 @@ public:
     
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
+
+private:
+    SlotMachine* m_machine;
 };
 
 #endif // __HELLOWORLD_SCENE_H__
