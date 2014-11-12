@@ -2,6 +2,7 @@
 #include "GAF.h"
 
 USING_NS_CC;
+USING_NS_GAF;
 
 Scene* HelloWorld::createScene()
 {
@@ -64,14 +65,15 @@ bool HelloWorld::init()
     // add the label as a child to this layer
     this->addChild(label, 1);
 
-    // add "HelloWorld" splash screen"
-    auto sprite = Sprite::create("HelloWorld.png");
-
-    // position the sprite on the center of the screen
-    sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-
-    // add the sprite as a child to this layer
-    this->addChild(sprite, 0);
+    auto asset = GAFAsset::create("slot_machine/slot_machine.gaf", nullptr);
+    auto machine = asset->createObjectAndRun(true);
+    machine->setPosition(300, 600);
+    auto white = machine->getObjectByName("obj.white_movie");
+    if (white)
+    {
+        white->gotoAndStop("whiteenter");
+    }
+    addChild(machine, 1);
     
     return true;
 }
