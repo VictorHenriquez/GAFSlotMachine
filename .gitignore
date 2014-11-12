@@ -1,6 +1,6 @@
 *.opensdf
 *.sdf
-/project/proj.win32/Debug.win32
+Debug.win32
 *.obj
 *.tlog
 *.pdb
@@ -20,7 +20,6 @@ ipch
 /proj.android/obj
 /proj.android/bin
 /proj.android/assets
-/proj.win32/Debug.win32
 /proj.win32/Debug
 *.log
 *.lastbuildstate
