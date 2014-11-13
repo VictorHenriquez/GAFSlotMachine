@@ -2,6 +2,9 @@
 
 USING_NS_GAF;
 
+const std::string SlotMachine::s_rewardCoins = "coins";
+const std::string SlotMachine::s_rewardChips = "chips";
+
 SlotMachine* SlotMachine::create(GAFObject* mainObject)
 {
     SlotMachine* ret = new SlotMachine();
@@ -17,6 +20,7 @@ SlotMachine* SlotMachine::create(GAFObject* mainObject)
 SlotMachine::SlotMachine()
     : m_state(EMachineState::Initial)
     , m_countdown(-1.0f)
+    , m_rewardType(s_rewardCoins)
 {
 }
 
@@ -34,6 +38,13 @@ bool SlotMachine::init(GAFObject* mainObject)
     m_arm = obj->getObjectByName("arm");
     m_whiteBG = obj->getObjectByName("white_exit");
     m_bottomCoins = obj->getObjectByName("wincoins");
+    m_rewardText = obj->getObjectByName("wintext");
+
+    for (int i = 0; i < 3; i++)
+    {
+        EPrize prize = static_cast<EPrize>(i + 1);
+        m_centralCoins[i] = obj->getObjectByName(getTextByPrize(prize));
+    }
 
     for (int i = 0; i < 3; i++)
     {
@@ -46,6 +57,8 @@ bool SlotMachine::init(GAFObject* mainObject)
             m_bars[i]->retain();
         }
     }
+
+    defaultPlacing();
 
     return true;
 }
@@ -84,6 +97,17 @@ void SlotMachine::start()
     }
 }
 
+void SlotMachine::defaultPlacing()
+{
+    m_whiteBG->gotoAndStop("whiteenter");
+    m_bottomCoins->setVisible(false);
+    m_rewardText->setVisible(false);
+    for (int i = 0; i < 3; i++)
+    {
+        m_centralCoins[i]->setVisible(false);
+    }
+}
+
 void SlotMachine::nextState()
 {
     m_state = static_cast<EMachineState>(static_cast<uint16_t>(m_state) + 1);
@@ -101,7 +125,9 @@ void SlotMachine::nextState()
 
         for (int i = 0; i < 3; i++)
         {
-            m_bars[i]->getBar()->playSequence("rotation", true); // TODO: timegaps between starts
+            std::stringstream ss;
+            ss << "rotation_" << m_rewardType;
+            m_bars[i]->getBar()->playSequence(ss.str(), true); // TODO: timegaps between starts
         }
 
         m_countdown = 5.0f;
@@ -128,39 +154,60 @@ void SlotMachine::nextState()
 
 SlotMachine::EPrize SlotMachine::getPrize()
 {
-    return EPrize::C1k;
+    return EPrize::C500k;
 }
 
 void SlotMachine::showPrize(EPrize prize)
 {
-    std::string coinsBottomState;
-    switch (prize)
-    {
-    case EPrize::None:
-        coinsBottomState = "notwin_coins";
-        break;
-
-    case EPrize::C1k:
-        coinsBottomState = "win1k_coins";
-        break;
-
-    case EPrize::C500k:
-        coinsBottomState = "win500k_coins";
-        break;
-
-    case EPrize::C1000k:
-        coinsBottomState = "win1000k_coins";
-        break;
-
-    default:
-        break;
-    }
-
+    std::string coinsBottomState = getTextByPrize(prize);
+    coinsBottomState.append("_");
+    coinsBottomState.append(m_rewardType);
+    m_bottomCoins->setVisible(true);
     m_bottomCoins->gotoAndStop(coinsBottomState);
 
     if (prize == EPrize::None)
     {
         nextState();
         return;
+    }
+
+    m_rewardText->setVisible(true);
+    m_rewardText->gotoAndStop(getTextByPrize(prize));
+
+    switch (prize)
+    {
+    case EPrize::C1k:
+
+        break;
+
+    case EPrize::C500k:
+        break;
+
+    case EPrize::C1000k:
+        break;
+
+    default:
+        break;
+    }
+}
+
+std::string SlotMachine::getTextByPrize(EPrize prize)
+{
+    switch (prize)
+    {
+    case EPrize::None:
+        return "notwin";
+
+    case EPrize::C1k:
+        return "win1k";
+
+    case EPrize::C500k:
+        return "win500k";
+
+    case EPrize::C1000k:
+        return "win1000k";
+
+    default:
+        return "";
     }
 }

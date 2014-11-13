@@ -40,13 +40,20 @@ public:
 private:
     gaf::GAFObject* m_arm;
     gaf::GAFObject* m_whiteBG;
+    gaf::GAFObject* m_rewardText;
     gaf::GAFObject* m_bottomCoins;
+    gaf::GAFObject* m_centralCoins[3];
     SlotBar* m_bars[3];
 
     EMachineState m_state;
+    std::string m_rewardType;
+    const static std::string s_rewardCoins;
+    const static std::string s_rewardChips;
 
+    void defaultPlacing();
     void nextState();
     void showPrize(EPrize prize);
+    std::string getTextByPrize(EPrize prize);
     EPrize getPrize();
 
     float m_countdown;
