@@ -32,8 +32,9 @@ bool SlotMachine::init(GAFObject* mainObject)
     auto obj = mainObject->getObjectByName("obj");
 
     m_arm = obj->getObjectByName("arm");
+    m_whiteBG = obj->getObjectByName("white_exit");
+    m_bottomCoins = obj->getObjectByName("wincoins");
 
-    m_whiteBG = obj->getObjectByName("white_movie");
     for (int i = 0; i < 3; i++)
     {
         std::stringstream ss;
@@ -77,7 +78,10 @@ void SlotMachine::update(float dt)
 
 void SlotMachine::start()
 {
-    nextState();    
+    if (m_state == EMachineState::Initial)
+    {
+        nextState();
+    }
 }
 
 void SlotMachine::nextState()
@@ -109,10 +113,54 @@ void SlotMachine::nextState()
         {
             m_bars[i]->getBar()->playSequence("stop");
         }
+        m_bars[2]->getBar()->setAnimationFinishedPlayDelegate(GAFAnimationStartedNextLoopDelegate_t(CC_CALLBACK_1(SlotMachine::onFinishSequence, this)));
+        break;
 
+    case EMachineState::Win:
+        m_bars[2]->getBar()->setAnimationFinishedPlayDelegate(nullptr);
+        showPrize(getPrize());
         break;
 
     default:
         break;
+    }
+}
+
+SlotMachine::EPrize SlotMachine::getPrize()
+{
+    return EPrize::C1k;
+}
+
+void SlotMachine::showPrize(EPrize prize)
+{
+    std::string coinsBottomState;
+    switch (prize)
+    {
+    case EPrize::None:
+        coinsBottomState = "notwin_coins";
+        break;
+
+    case EPrize::C1k:
+        coinsBottomState = "win1k_coins";
+        break;
+
+    case EPrize::C500k:
+        coinsBottomState = "win500k_coins";
+        break;
+
+    case EPrize::C1000k:
+        coinsBottomState = "win1000k_coins";
+        break;
+
+    default:
+        break;
+    }
+
+    m_bottomCoins->gotoAndStop(coinsBottomState);
+
+    if (prize == EPrize::None)
+    {
+        nextState();
+        return;
     }
 }

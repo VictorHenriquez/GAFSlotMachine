@@ -69,7 +69,7 @@ bool HelloWorld::init()
     auto asset = GAFAsset::create("slot_machine/slot_machine.gaf", nullptr);
     auto machine = asset->createObjectAndRun(true);
     machine->setPosition(300, 600);
-    auto white = machine->getObjectByName("obj.white_movie");
+    auto white = machine->getObjectByName("obj.white_exit");
     if (white)
     {
         white->gotoAndStop("whiteenter");

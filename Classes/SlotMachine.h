@@ -16,6 +16,14 @@ class SlotMachine : public cocos2d::Ref
         COUNT
     };
 
+    enum class EPrize : uint16_t
+    {
+        None = 0,
+        C1k,
+        C500k,
+        C1000k
+    };
+
 public:
     static SlotMachine* create(gaf::GAFObject* mainObject);
 
@@ -32,11 +40,14 @@ public:
 private:
     gaf::GAFObject* m_arm;
     gaf::GAFObject* m_whiteBG;
+    gaf::GAFObject* m_bottomCoins;
     SlotBar* m_bars[3];
 
     EMachineState m_state;
 
     void nextState();
+    void showPrize(EPrize prize);
+    EPrize getPrize();
 
     float m_countdown;
 };
