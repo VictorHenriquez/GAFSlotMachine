@@ -39,6 +39,7 @@ bool SlotMachine::init(GAFObject* mainObject)
     m_whiteBG = obj->getObjectByName("white_exit");
     m_bottomCoins = obj->getObjectByName("wincoins");
     m_rewardText = obj->getObjectByName("wintext");
+    m_winFrame = obj->getObjectByName("frame");
 
     for (int i = 0; i < 3; i++)
     {
@@ -100,6 +101,7 @@ void SlotMachine::start()
 void SlotMachine::defaultPlacing()
 {
     m_whiteBG->gotoAndStop("whiteenter");
+    m_winFrame->gotoAndStop("stop");
     m_bottomCoins->setVisible(false);
     m_rewardText->setVisible(false);
     for (int i = 0; i < 3; i++)
@@ -111,9 +113,18 @@ void SlotMachine::defaultPlacing()
 void SlotMachine::nextState()
 {
     m_state = static_cast<EMachineState>(static_cast<uint16_t>(m_state) + 1);
+    if (m_state == EMachineState::COUNT)
+    {
+        m_state = static_cast<EMachineState>(0);
+    }
 
     switch (m_state)
     {
+    case EMachineState::Initial:
+        m_whiteBG->setAnimationStartedNextLoopDelegate(nullptr);
+        defaultPlacing();
+        break;
+
     case EMachineState::ArmTouched:
         m_arm->playSequence("push");
         m_arm->setAnimationFinishedPlayDelegate(GAFAnimationStartedNextLoopDelegate_t(CC_CALLBACK_1(SlotMachine::onFinishSequence, this)));
@@ -130,7 +141,7 @@ void SlotMachine::nextState()
             m_bars[i]->getBar()->playSequence(ss.str(), true); // TODO: timegaps between starts
         }
 
-        m_countdown = 5.0f;
+        m_countdown = 3.0f;
 
         break;
 
@@ -145,6 +156,11 @@ void SlotMachine::nextState()
     case EMachineState::Win:
         m_bars[2]->getBar()->setAnimationFinishedPlayDelegate(nullptr);
         showPrize(getPrize());
+        break;
+
+    case EMachineState::End:
+        m_whiteBG->resumeAnimation();
+        m_whiteBG->setAnimationStartedNextLoopDelegate(GAFAnimationStartedNextLoopDelegate_t(CC_CALLBACK_1(SlotMachine::onFinishSequence, this)));
         break;
 
     default:
@@ -171,24 +187,15 @@ void SlotMachine::showPrize(EPrize prize)
         return;
     }
 
+    m_winFrame->playSequence("win", true);
     m_rewardText->setVisible(true);
-    m_rewardText->gotoAndStop(getTextByPrize(prize));
+    m_rewardText->playSequence(getTextByPrize(prize), true);
 
-    switch (prize)
-    {
-    case EPrize::C1k:
+    int idx = static_cast<int>(prize)-1;
+    m_centralCoins[idx]->setVisible(true);
+    m_centralCoins[idx]->playSequence(m_rewardType, true);
 
-        break;
-
-    case EPrize::C500k:
-        break;
-
-    case EPrize::C1000k:
-        break;
-
-    default:
-        break;
-    }
+    m_countdown = 5.0f;
 }
 
 std::string SlotMachine::getTextByPrize(EPrize prize)

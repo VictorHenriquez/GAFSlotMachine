@@ -43,6 +43,7 @@ private:
     gaf::GAFObject* m_rewardText;
     gaf::GAFObject* m_bottomCoins;
     gaf::GAFObject* m_centralCoins[3];
+    gaf::GAFObject* m_winFrame;
     SlotBar* m_bars[3];
 
     EMachineState m_state;
