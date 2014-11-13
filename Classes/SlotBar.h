@@ -11,6 +11,8 @@ public:
     SlotBar();
     bool init(GAFObject* mainObject);
 
+    void randomizeSlots(int maxTypes, std::string machineType);
+
     GAFObject* getBar();
 
 private:

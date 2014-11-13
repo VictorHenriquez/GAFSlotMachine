@@ -20,7 +20,7 @@ SlotMachine* SlotMachine::create(GAFObject* mainObject)
 SlotMachine::SlotMachine()
     : m_state(EMachineState::Initial)
     , m_countdown(-1.0f)
-    , m_rewardType(s_rewardCoins)
+    , m_rewardType(s_rewardChips)
 {
 }
 
@@ -67,15 +67,6 @@ bool SlotMachine::init(GAFObject* mainObject)
 void SlotMachine::onFinishSequence(gaf::GAFObject* object)
 {
     nextState();
-    switch (m_state)
-    {
-    case EMachineState::ArmTouched:
-
-        break;
-
-    default:
-        break;
-    }
 }
 
 void SlotMachine::update(float dt)
@@ -101,12 +92,18 @@ void SlotMachine::start()
 void SlotMachine::defaultPlacing()
 {
     m_whiteBG->gotoAndStop("whiteenter");
-    m_winFrame->gotoAndStop("stop");
+    m_winFrame->playSequence("stop", true);
+    m_arm->playSequence("stop", true);
     m_bottomCoins->setVisible(false);
     m_rewardText->setVisible(false);
     for (int i = 0; i < 3; i++)
     {
         m_centralCoins[i]->setVisible(false);
+    }
+    for (int i = 0; i < 3; i++)
+    {
+        m_bars[i]->getBar()->playSequence("statics", true);
+        m_bars[i]->randomizeSlots(5, m_rewardType);
     }
 }
 
