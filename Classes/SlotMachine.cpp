@@ -1,9 +1,11 @@
 #include "SlotMachine.h"
+#include "SlotBar.h"
 
 USING_NS_GAF;
 
 const std::string SlotMachine::s_rewardCoins = "coins";
 const std::string SlotMachine::s_rewardChips = "chips";
+const int SlotMachine::s_fruitCount = 5;
 
 SlotMachine* SlotMachine::create(GAFObject* mainObject)
 {
@@ -22,6 +24,7 @@ SlotMachine::SlotMachine()
     , m_countdown(-1.0f)
     , m_rewardType(s_rewardChips)
 {
+    srand(time(nullptr));
 }
 
 SlotMachine::~SlotMachine()
@@ -103,7 +106,7 @@ void SlotMachine::defaultPlacing()
     for (int i = 0; i < 3; i++)
     {
         m_bars[i]->getBar()->playSequence("statics", true);
-        m_bars[i]->randomizeSlots(5, m_rewardType);
+        m_bars[i]->randomizeSlots(s_fruitCount, m_rewardType);
     }
 }
 
@@ -143,16 +146,20 @@ void SlotMachine::nextState()
         break;
 
     case EMachineState::SpinEnd:
-        for (int i = 0; i < 3; i++)
         {
-            m_bars[i]->getBar()->playSequence("stop");
+            m_prize = generatePrize();
+            PrizeMatrix_t spinResult = generateSpinResult(m_prize);
+            for (int i = 0; i < 3; i++)
+            {
+                m_bars[i]->showSpinResult(spinResult[i], m_rewardType);
+            }
+            m_bars[2]->getBar()->setAnimationStartedNextLoopDelegate(GAFAnimationStartedNextLoopDelegate_t(CC_CALLBACK_1(SlotMachine::onFinishSequence, this)));
         }
-        m_bars[2]->getBar()->setAnimationFinishedPlayDelegate(GAFAnimationStartedNextLoopDelegate_t(CC_CALLBACK_1(SlotMachine::onFinishSequence, this)));
         break;
 
     case EMachineState::Win:
-        m_bars[2]->getBar()->setAnimationFinishedPlayDelegate(nullptr);
-        showPrize(getPrize());
+        m_bars[2]->getBar()->setAnimationStartedNextLoopDelegate(nullptr);
+        showPrize(m_prize);
         break;
 
     case EMachineState::End:
@@ -165,9 +172,61 @@ void SlotMachine::nextState()
     }
 }
 
-SlotMachine::EPrize SlotMachine::getPrize()
+SlotMachine::EPrize SlotMachine::generatePrize()
 {
-    return EPrize::C500k;
+    int count = static_cast<int>(EPrize::COUNT);
+    int prize = rand() % count;
+    return static_cast<EPrize>(prize);
+}
+
+SlotMachine::PrizeMatrix_t SlotMachine::generateSpinResult(EPrize prize)
+{
+    PrizeMatrix_t result(3, PrizeBar_t(3));
+
+    for (int i = 0; i < 3; i++)
+    {
+        result[i][0] = rand() % s_fruitCount;
+        result[i][2] = rand() % s_fruitCount;
+    }
+
+    int centralFruit;
+    switch (prize)
+    {
+    case EPrize::None:
+        centralFruit = rand() % s_fruitCount;
+        break;
+    case EPrize::C1k:
+        centralFruit = rand() % (s_fruitCount / 2);
+        break;
+    case EPrize::C500k:
+        centralFruit = rand() % (s_fruitCount / 2) + s_fruitCount / 2;
+        break;
+    case EPrize::C1000k:
+        centralFruit = s_fruitCount - 1;
+        break;
+    default:
+        break;
+    }
+
+    if (prize == EPrize::None)
+    {
+        result[0][1] = centralFruit;
+        result[1][1] = centralFruit;
+        result[2][1] = centralFruit;
+        while (result[2][1] == result[1][1])
+        {
+            result[2][1] = rand() % s_fruitCount; // last fruit should be another
+        }
+    }
+    else
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            result[i][1] = centralFruit;
+        }
+    }
+
+    return result;
 }
 
 void SlotMachine::showPrize(EPrize prize)

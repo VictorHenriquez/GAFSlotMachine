@@ -49,6 +49,17 @@ void SlotBar::randomizeSlots(int maxTypes, std::string machineType)
     }
 }
 
+void SlotBar::showSpinResult(SlotMachine::PrizeBar_t fruits, std::string machineType)
+{
+    for (int i = 0; i < 3; i++)
+    {
+        std::stringstream ss;
+        ss << fruits[i] + 1 << "_" << machineType;
+        m_slots[i]->playSequence(ss.str(), true);
+    }
+    m_bar->playSequence("stop", true);
+}
+
 GAFObject* SlotBar::getBar()
 {
     return m_bar;

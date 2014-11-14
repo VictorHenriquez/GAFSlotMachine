@@ -1,9 +1,12 @@
+#pragma once
+
 #include "cocos2d.h"
 #include "GAF.h"
-#include "SlotBar.h"
 
 class SlotMachine : public cocos2d::Ref
 {
+    friend class SlotBar;
+
     enum class EMachineState : uint16_t
     {
         Initial = 0,
@@ -21,8 +24,13 @@ class SlotMachine : public cocos2d::Ref
         None = 0,
         C1k,
         C500k,
-        C1000k
+        C1000k,
+
+        COUNT
     };
+
+    typedef std::vector<int> PrizeBar_t;
+    typedef std::vector<PrizeBar_t> PrizeMatrix_t;
 
 public:
     static SlotMachine* create(gaf::GAFObject* mainObject);
@@ -48,14 +56,19 @@ private:
 
     EMachineState m_state;
     std::string m_rewardType;
-    const static std::string s_rewardCoins;
-    const static std::string s_rewardChips;
-
+    
     void defaultPlacing();
     void nextState();
     void showPrize(EPrize prize);
+
     std::string getTextByPrize(EPrize prize);
-    EPrize getPrize();
+    EPrize m_prize;
+    EPrize generatePrize();
+    PrizeMatrix_t generateSpinResult(EPrize prize);
 
     float m_countdown;
+
+    const static std::string s_rewardCoins;
+    const static std::string s_rewardChips;
+    const static int s_fruitCount;
 };
