@@ -14,6 +14,9 @@ public:
     SlotBar();
     bool init(GAFObject* mainObject);
 
+    void update(float dt);
+
+    void playSequenceWithTimeout(std::string sequence, float timeout);
     void randomizeSlots(int maxTypes, std::string machineType);
     void showSpinResult(SlotMachine::PrizeBar_t, std::string machineType);
 
@@ -22,4 +25,7 @@ public:
 private:
     GAFObject* m_slots[3];
     GAFObject* m_bar;
+
+    float m_countdown;
+    std::string m_sequence;
 };

@@ -15,6 +15,7 @@ SlotBar* SlotBar::create(GAFObject* mainObject)
 }
 
 SlotBar::SlotBar()
+    : m_countdown(-1.0f)
 {
 }
 
@@ -38,6 +39,24 @@ bool SlotBar::init(GAFObject* mainObject)
     return true;
 }
 
+void SlotBar::update(float dt)
+{
+    if (m_countdown >= 0.0f)
+    {
+        m_countdown -= dt;
+        if (m_countdown < 0.0f)
+        {
+            m_bar->playSequence(m_sequence, true);
+        }
+    }
+}
+
+void SlotBar::playSequenceWithTimeout(std::string sequence, float timeout)
+{
+    m_countdown = timeout;
+    m_sequence = sequence;
+}
+
 void SlotBar::randomizeSlots(int maxTypes, std::string machineType)
 {
     for (int i = 0; i < 3; i++)
@@ -57,7 +76,6 @@ void SlotBar::showSpinResult(SlotMachine::PrizeBar_t fruits, std::string machine
         ss << fruits[i] + 1 << "_" << machineType;
         m_slots[i]->playSequence(ss.str(), true);
     }
-    m_bar->playSequence("stop", true);
 }
 
 GAFObject* SlotBar::getBar()

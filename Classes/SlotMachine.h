@@ -71,4 +71,5 @@ private:
     const static std::string s_rewardCoins;
     const static std::string s_rewardChips;
     const static int s_fruitCount;
+    const static float s_barTimeout;
 };

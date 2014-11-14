@@ -6,6 +6,7 @@ USING_NS_GAF;
 const std::string SlotMachine::s_rewardCoins = "coins";
 const std::string SlotMachine::s_rewardChips = "chips";
 const int SlotMachine::s_fruitCount = 5;
+const float SlotMachine::s_barTimeout = 0.2f;
 
 SlotMachine* SlotMachine::create(GAFObject* mainObject)
 {
@@ -82,6 +83,11 @@ void SlotMachine::update(float dt)
             nextState();
         }
     }
+
+    for (int i = 0; i < 3; i++)
+    {
+        m_bars[i]->update(dt);
+    }
 }
 
 void SlotMachine::start()
@@ -138,7 +144,7 @@ void SlotMachine::nextState()
         {
             std::stringstream ss;
             ss << "rotation_" << m_rewardType;
-            m_bars[i]->getBar()->playSequence(ss.str(), true); // TODO: timegaps between starts
+            m_bars[i]->playSequenceWithTimeout(ss.str(), s_barTimeout * i);
         }
 
         m_countdown = 3.0f;
@@ -152,13 +158,13 @@ void SlotMachine::nextState()
             for (int i = 0; i < 3; i++)
             {
                 m_bars[i]->showSpinResult(spinResult[i], m_rewardType);
+                m_bars[i]->playSequenceWithTimeout("stop", s_barTimeout * i);
             }
-            m_bars[2]->getBar()->setAnimationStartedNextLoopDelegate(GAFAnimationStartedNextLoopDelegate_t(CC_CALLBACK_1(SlotMachine::onFinishSequence, this)));
+            m_countdown = s_barTimeout * 4;
         }
         break;
 
     case EMachineState::Win:
-        m_bars[2]->getBar()->setAnimationStartedNextLoopDelegate(nullptr);
         showPrize(m_prize);
         break;
 
