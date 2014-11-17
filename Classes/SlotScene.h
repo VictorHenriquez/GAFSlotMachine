@@ -5,7 +5,7 @@
 
 class SlotMachine;
 
-class HelloWorld : public cocos2d::Layer
+class SlotScene : public cocos2d::Layer
 {
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
@@ -20,7 +20,7 @@ public:
     virtual void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
     
     // implement the "static create()" method manually
-    CREATE_FUNC(HelloWorld);
+    CREATE_FUNC(SlotScene);
 
 private:
     SlotMachine* m_machine;

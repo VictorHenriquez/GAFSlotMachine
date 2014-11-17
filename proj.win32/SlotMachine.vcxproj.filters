@@ -21,14 +21,14 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\SlotMachine.cpp">
       <Filter>Classes\SlotMachine</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\SlotBar.cpp">
       <Filter>Classes\SlotMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SlotScene.cpp">
+      <Filter>Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -38,14 +38,14 @@
     <ClInclude Include="..\Classes\AppDelegate.h">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\HelloWorldScene.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\SlotMachine.h">
       <Filter>Classes\SlotMachine</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\SlotBar.h">
       <Filter>Classes\SlotMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SlotScene.h">
+      <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
