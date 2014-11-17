@@ -283,3 +283,8 @@ std::string SlotMachine::getTextByPrize(EPrize prize)
         return "";
     }
 }
+
+GAFObject* SlotMachine::getArm()
+{
+    return m_arm;
+}

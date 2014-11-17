@@ -45,6 +45,8 @@ public:
 
     void onFinishSequence(gaf::GAFObject* object);
 
+    gaf::GAFObject* getArm();
+
 private:
     gaf::GAFObject* m_arm;
     gaf::GAFObject* m_whiteBG;
