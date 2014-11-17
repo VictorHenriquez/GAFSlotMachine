@@ -46,12 +46,12 @@ void SlotBar::update(float dt)
         m_countdown -= dt;
         if (m_countdown < 0.0f)
         {
-            m_bar->playSequence(m_sequence, true);
+            m_bar->playSequence(m_sequence.name, m_sequence.looped);
         }
     }
 }
 
-void SlotBar::playSequenceWithTimeout(std::string sequence, float timeout)
+void SlotBar::playSequenceWithTimeout(SequencePlaybackInfo sequence, float timeout)
 {
     m_countdown = timeout;
     m_sequence = sequence;

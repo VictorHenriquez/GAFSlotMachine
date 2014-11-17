@@ -101,9 +101,10 @@ void SlotMachine::start()
 void SlotMachine::defaultPlacing()
 {
     m_whiteBG->gotoAndStop("whiteenter");
-    m_winFrame->playSequence("stop", true);
-    m_arm->playSequence("stop", true);
+    m_winFrame->playSequence("stop");
+    m_arm->playSequence("stop");
     m_bottomCoins->setVisible(false);
+    m_bottomCoins->setLooped(false);
     m_rewardText->setVisible(false);
     for (int i = 0; i < 3; i++)
     {
@@ -111,7 +112,7 @@ void SlotMachine::defaultPlacing()
     }
     for (int i = 0; i < 3; i++)
     {
-        m_bars[i]->getBar()->playSequence("statics", true);
+        m_bars[i]->getBar()->playSequence("statics");
         m_bars[i]->randomizeSlots(s_fruitCount, m_rewardType);
     }
 }
@@ -138,13 +139,14 @@ void SlotMachine::nextState()
 
     case EMachineState::Spin:
         m_arm->setAnimationFinishedPlayDelegate(nullptr);
-        m_arm->playSequence("stop", true);
+        m_arm->playSequence("stop");
 
         for (int i = 0; i < 3; i++)
         {
             std::stringstream ss;
             ss << "rotation_" << m_rewardType;
-            m_bars[i]->playSequenceWithTimeout(ss.str(), s_barTimeout * i);
+            SlotBar::SequencePlaybackInfo sequence(ss.str(), true);
+            m_bars[i]->playSequenceWithTimeout(sequence, s_barTimeout * i);
         }
 
         m_countdown = 3.0f;
@@ -158,7 +160,8 @@ void SlotMachine::nextState()
             for (int i = 0; i < 3; i++)
             {
                 m_bars[i]->showSpinResult(spinResult[i], m_rewardType);
-                m_bars[i]->playSequenceWithTimeout("stop", s_barTimeout * i);
+                SlotBar::SequencePlaybackInfo sequence("stop", false);
+                m_bars[i]->playSequenceWithTimeout(sequence, s_barTimeout * i);
             }
             m_countdown = s_barTimeout * 4;
         }

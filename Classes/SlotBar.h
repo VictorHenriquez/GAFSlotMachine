@@ -9,6 +9,18 @@ USING_NS_GAF;
 class SlotBar : public cocos2d::Ref
 {
 public:
+    struct SequencePlaybackInfo
+    {
+        SequencePlaybackInfo() {}
+        SequencePlaybackInfo(std::string name_, bool looped_)
+        {
+            name = name_;
+            looped = looped_;
+        }
+        std::string name;
+        bool looped;
+    };
+
     static SlotBar* create(GAFObject* mainObject);
 
     SlotBar();
@@ -16,7 +28,7 @@ public:
 
     void update(float dt);
 
-    void playSequenceWithTimeout(std::string sequence, float timeout);
+    void playSequenceWithTimeout(SequencePlaybackInfo sequence, float timeout);
     void randomizeSlots(int maxTypes, std::string machineType);
     void showSpinResult(SlotMachine::PrizeBar_t, std::string machineType);
 
@@ -27,5 +39,5 @@ private:
     GAFObject* m_bar;
 
     float m_countdown;
-    std::string m_sequence;
+    SequencePlaybackInfo m_sequence;
 };
