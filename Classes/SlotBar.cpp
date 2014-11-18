@@ -75,7 +75,7 @@ void SlotBar::switchSlotType(int maxSlots)
         int curFrame = m_slots[i]->getCurrentFrameIndex();
         const int maxFrame = m_slots[i]->getTotalFrameCount();
         curFrame += maxSlots;
-        if (curFrame > maxFrame)
+        if (curFrame >= maxFrame)
         {
             curFrame = curFrame % maxSlots;
         }

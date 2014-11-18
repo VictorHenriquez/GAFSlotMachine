@@ -24,6 +24,7 @@ SlotMachine::SlotMachine()
     : m_state(EMachineState::Initial)
     , m_countdown(-1.0f)
     , m_rewardType(s_rewardChips)
+    , m_prize(EPrize::C1000k)
 {
     srand(time(nullptr));
 }
@@ -228,9 +229,20 @@ void SlotMachine::resetCallbacks()
 
 SlotMachine::EPrize SlotMachine::generatePrize()
 {
+    /*
     int count = static_cast<int>(EPrize::COUNT);
     int prize = rand() % count;
     return static_cast<EPrize>(prize);
+    */
+
+    uint16_t p = static_cast<uint16_t>(m_prize) + 1;
+    EPrize prize = static_cast<EPrize>(p);
+    if (prize == EPrize::COUNT)
+    {
+        prize = EPrize::None;
+    }
+
+    return prize;
 }
 
 SlotMachine::PrizeMatrix_t SlotMachine::generateSpinResult(EPrize prize)
