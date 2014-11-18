@@ -19,6 +19,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
         director->setOpenGLView(glview);
     }
 
+    glview->setDesignResolutionSize(343, 572, ResolutionPolicy::NO_BORDER);
+
     director->setDisplayStats(true);
     director->setAnimationInterval(1.0 / 60);
 
