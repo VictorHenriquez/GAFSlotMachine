@@ -47,6 +47,7 @@ public:
     void switchType();
 
     void onFinishSequence(gaf::GAFObject* object);
+    void onFinishRaysSequence(gaf::GAFObject* object);
 
     gaf::GAFObject* getArm();
 

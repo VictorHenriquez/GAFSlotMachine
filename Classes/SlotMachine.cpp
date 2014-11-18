@@ -45,6 +45,8 @@ bool SlotMachine::init(GAFObject* mainObject)
     m_rewardText = obj->getObjectByName("wintext");
     m_winFrame = obj->getObjectByName("frame");
     m_spinningRays = obj->getObjectByName("spinning_rays");
+    m_spinningRays->playSequence("start");
+    m_spinningRays->setAnimationFinishedPlayDelegate(GAFAnimationStartedNextLoopDelegate_t(CC_CALLBACK_1(SlotMachine::onFinishRaysSequence, this)));
 
     for (int i = 0; i < 3; i++)
     {
@@ -74,6 +76,12 @@ bool SlotMachine::init(GAFObject* mainObject)
 void SlotMachine::onFinishSequence(gaf::GAFObject* object)
 {
     nextState();
+}
+
+void SlotMachine::onFinishRaysSequence(gaf::GAFObject* object)
+{
+    m_spinningRays->setAnimationFinishedPlayDelegate(nullptr);
+    m_spinningRays->playSequence("spin", true);
 }
 
 void SlotMachine::update(float dt)
