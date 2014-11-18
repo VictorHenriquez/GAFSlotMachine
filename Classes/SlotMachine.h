@@ -55,6 +55,7 @@ private:
     gaf::GAFObject* m_bottomCoins;
     gaf::GAFObject* m_centralCoins[3];
     gaf::GAFObject* m_winFrame;
+    gaf::GAFObject* m_spinningRays;
     SlotBar* m_bars[3];
 
     EMachineState m_state;

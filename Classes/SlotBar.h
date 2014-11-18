@@ -31,6 +31,7 @@ public:
     void playSequenceWithTimeout(SequencePlaybackInfo sequence, float timeout);
     void randomizeSlots(int maxTypes, std::string machineType);
     void showSpinResult(SlotMachine::PrizeBar_t, std::string machineType);
+    void switchSlotType(int maxSlots);
 
     GAFObject* getBar();
 

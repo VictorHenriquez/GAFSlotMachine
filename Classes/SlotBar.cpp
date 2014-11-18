@@ -68,6 +68,23 @@ void SlotBar::randomizeSlots(int maxTypes, std::string machineType)
     }
 }
 
+void SlotBar::switchSlotType(int maxSlots)
+{
+    for (int i = 0; i < 3; i++)
+    {
+        int curFrame = m_slots[i]->getCurrentFrameIndex();
+        const int maxFrame = m_slots[i]->getTotalFrameCount();
+        curFrame += maxSlots;
+        if (curFrame > maxFrame)
+        {
+            curFrame = curFrame % maxSlots;
+        }
+
+        m_slots[i]->clearSequence();
+        m_slots[i]->gotoAndStop(curFrame);
+    }
+}
+
 void SlotBar::showSpinResult(SlotMachine::PrizeBar_t fruits, std::string machineType)
 {
     for (int i = 0; i < 3; i++)

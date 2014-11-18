@@ -44,6 +44,7 @@ bool SlotMachine::init(GAFObject* mainObject)
     m_bottomCoins = obj->getObjectByName("wincoins");
     m_rewardText = obj->getObjectByName("wintext");
     m_winFrame = obj->getObjectByName("frame");
+    m_spinningRays = obj->getObjectByName("spinning_rays");
 
     for (int i = 0; i < 3; i++)
     {
@@ -118,6 +119,11 @@ void SlotMachine::switchType()
     }
     m_state = static_cast<EMachineState>(state);
     nextState();
+
+    for (int i = 0; i < 3; i++)
+    {
+        m_bars[i]->switchSlotType(s_fruitCount);
+    }
 }
 
 void SlotMachine::defaultPlacing()
@@ -128,6 +134,7 @@ void SlotMachine::defaultPlacing()
     m_bottomCoins->setVisible(false);
     m_bottomCoins->setLooped(false);
     m_rewardText->playSequence("notwin", true);
+    //m_spinningRays->playSequence("spin", true);
 
     for (int i = 0; i < 3; i++)
     {
