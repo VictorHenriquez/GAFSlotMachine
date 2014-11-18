@@ -3,6 +3,8 @@
 #include "cocos2d.h"
 #include "GAF.h"
 
+class SlotBar;
+
 class SlotMachine : public cocos2d::Ref
 {
     friend class SlotBar;
