@@ -7,20 +7,12 @@ USING_NS_GAF;
 
 Scene* SlotScene::createScene()
 {
-    // 'scene' is an autorelease object
     auto scene = Scene::create();
-    
-    // 'layer' is an autorelease object
     auto layer = SlotScene::create();
-
-    // add layer as a child to scene
     scene->addChild(layer);
-
-    // return the scene
     return scene;
 }
 
-// on "init" you need to initialize your instance
 bool SlotScene::init()
 {
     if ( !Layer::init() )
@@ -30,6 +22,18 @@ bool SlotScene::init()
     
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+    auto switchMachineType = MenuItemImage::create(
+        "CloseNormal.png",
+        "CloseSelected.png",
+        CC_CALLBACK_1(SlotScene::switchMachineCallback, this));
+    
+    switchMachineType->setPosition(Vec2(origin.x + visibleSize.width - switchMachineType->getContentSize().width / 2,
+        origin.y + switchMachineType->getContentSize().height / 2));
+    
+    auto menu = Menu::create(switchMachineType, NULL);
+    menu->setPosition(Vec2::ZERO);
+    addChild(menu, 1);
 
     auto asset = GAFAsset::create("slot_machine/slot_machine.gaf", nullptr);
     auto machine = asset->createObjectAndRun(true);
@@ -67,4 +71,9 @@ bool SlotScene::onTouchBegan(Touch* touch, Event* event)
 void SlotScene::onTouchEnded(Touch* touch, Event* event)
 {
     m_machine->start();
+}
+
+void SlotScene::switchMachineCallback(Ref* pSender)
+{
+    m_machine->switchType();
 }

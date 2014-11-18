@@ -18,6 +18,7 @@ public:
 
     virtual bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
     virtual void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
+    void switchMachineCallback(Ref* pSender);
     
     // implement the "static create()" method manually
     CREATE_FUNC(SlotScene);

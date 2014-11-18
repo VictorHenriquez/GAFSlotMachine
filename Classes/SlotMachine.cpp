@@ -61,6 +61,8 @@ bool SlotMachine::init(GAFObject* mainObject)
         {
             m_bars[i]->retain();
         }
+
+        m_bars[i]->randomizeSlots(s_fruitCount, m_rewardType);
     }
 
     defaultPlacing();
@@ -98,6 +100,26 @@ void SlotMachine::start()
     }
 }
 
+void SlotMachine::switchType()
+{
+    if (m_rewardType.compare(s_rewardChips) == 0)
+    {
+        m_rewardType = s_rewardCoins;
+    }
+    else if (m_rewardType.compare(s_rewardCoins) == 0)
+    {
+        m_rewardType = s_rewardChips;
+    }
+
+    int state = static_cast<int>(m_state) - 1;
+    if (state < 0)
+    {
+        state = static_cast<int>(EMachineState::COUNT) - 1;
+    }
+    m_state = static_cast<EMachineState>(state);
+    nextState();
+}
+
 void SlotMachine::defaultPlacing()
 {
     m_whiteBG->gotoAndStop("whiteenter");
@@ -105,7 +127,8 @@ void SlotMachine::defaultPlacing()
     m_arm->playSequence("stop");
     m_bottomCoins->setVisible(false);
     m_bottomCoins->setLooped(false);
-    m_rewardText->setVisible(false);
+    m_rewardText->playSequence("notwin", true);
+
     for (int i = 0; i < 3; i++)
     {
         m_centralCoins[i]->setVisible(false);
@@ -113,7 +136,7 @@ void SlotMachine::defaultPlacing()
     for (int i = 0; i < 3; i++)
     {
         m_bars[i]->getBar()->playSequence("statics");
-        m_bars[i]->randomizeSlots(s_fruitCount, m_rewardType);
+        //m_bars[i]->randomizeSlots(s_fruitCount, m_rewardType);
     }
 }
 
@@ -125,10 +148,11 @@ void SlotMachine::nextState()
         m_state = static_cast<EMachineState>(0);
     }
 
+    resetCallbacks();
+
     switch (m_state)
     {
     case EMachineState::Initial:
-        m_whiteBG->setAnimationStartedNextLoopDelegate(nullptr);
         defaultPlacing();
         break;
 
@@ -138,7 +162,6 @@ void SlotMachine::nextState()
         break;
 
     case EMachineState::Spin:
-        m_arm->setAnimationFinishedPlayDelegate(nullptr);
         m_arm->playSequence("stop");
 
         for (int i = 0; i < 3; i++)
@@ -179,6 +202,13 @@ void SlotMachine::nextState()
     default:
         break;
     }
+}
+
+void SlotMachine::resetCallbacks()
+{
+    m_whiteBG->setAnimationStartedNextLoopDelegate(nullptr);
+    m_arm->setAnimationFinishedPlayDelegate(nullptr);
+    m_countdown = -1.0f;
 }
 
 SlotMachine::EPrize SlotMachine::generatePrize()
@@ -253,7 +283,6 @@ void SlotMachine::showPrize(EPrize prize)
     }
 
     m_winFrame->playSequence("win", true);
-    m_rewardText->setVisible(true);
     m_rewardText->playSequence(getTextByPrize(prize), true);
 
     int idx = static_cast<int>(prize)-1;

@@ -42,6 +42,7 @@ public:
     void update(float dt);
 
     void start();
+    void switchType();
 
     void onFinishSequence(gaf::GAFObject* object);
 
@@ -62,6 +63,8 @@ private:
     void defaultPlacing();
     void nextState();
     void showPrize(EPrize prize);
+
+    void resetCallbacks();
 
     std::string getTextByPrize(EPrize prize);
     EPrize m_prize;
