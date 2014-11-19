@@ -33,11 +33,11 @@ bool SlotScene::init()
     
     auto menu = Menu::create(switchMachineType, NULL);
     menu->setPosition(Vec2::ZERO);
-    addChild(menu, 1);
+    addChild(menu, 2);
 
     auto asset = GAFAsset::create("slot_machine/slot_machine.gaf", nullptr);
     auto machine = asset->createObjectAndRun(true);
-    machine->setPosition(0, 600);
+    machine->setPosition(0, 1920); // TODO: hardcode
     addChild(machine, 1);
     m_machine = SlotMachine::create(machine);
     if (m_machine)
