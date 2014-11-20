@@ -28,8 +28,8 @@ bool SlotScene::init()
         "btn_swap_down.png",
         CC_CALLBACK_1(SlotScene::switchMachineCallback, this));
     
-    switchMachineType->setPosition(Vec2(origin.x + visibleSize.width - switchMachineType->getContentSize().width / 2,
-        origin.y + switchMachineType->getContentSize().height / 2));
+    switchMachineType->setPosition(Vec2(origin.x + visibleSize.width - switchMachineType->getContentSize().width,
+        origin.y + switchMachineType->getContentSize().height));
     
     auto menu = Menu::create(switchMachineType, NULL);
     menu->setPosition(Vec2::ZERO);
