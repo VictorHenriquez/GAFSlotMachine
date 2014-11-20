@@ -64,6 +64,7 @@ void SlotScene::update(float dt)
 bool SlotScene::onTouchBegan(Touch* touch, Event* event)
 {
     Vec2 localPoint = m_machine->getArm()->convertTouchToNodeSpace(touch);
+    localPoint = cocos2d::PointApplyTransform(localPoint, m_machine->getArm()->getNodeToParentTransform());
     Rect r = m_machine->getArm()->getBoundingBoxForCurrentFrame();
     return r.containsPoint(localPoint);
 }
