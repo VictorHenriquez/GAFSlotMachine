@@ -24,8 +24,8 @@ bool SlotScene::init()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     auto switchMachineType = MenuItemImage::create(
-        "CloseNormal.png",
-        "CloseSelected.png",
+        "btn_swap.png",
+        "btn_swap_down.png",
         CC_CALLBACK_1(SlotScene::switchMachineCallback, this));
     
     switchMachineType->setPosition(Vec2(origin.x + visibleSize.width - switchMachineType->getContentSize().width / 2,
