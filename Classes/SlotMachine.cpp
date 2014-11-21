@@ -32,8 +32,10 @@ SlotMachine::SlotMachine()
     : m_state(EMachineState::Initial)
     , m_countdown(-1.0f)
     , m_rewardType(s_rewardChips)
-    , m_prize(EPrize::C1000k)
 {
+	const EPrize arr[] = {EPrize::C1000k, EPrize::None, EPrize::C1000k, EPrize::C1k, EPrize::C1000k, EPrize::C500k,};
+	m_prizeSequence = std::vector<EPrize>(arr, arr + sizeof(arr) / sizeof(arr[0]));
+	m_prize = m_prizeSequence.end() - 1;
     srand(time(nullptr));
 }
 
@@ -215,8 +217,8 @@ void SlotMachine::nextState()
 
     case EMachineState::SpinEnd:
         {
-            m_prize = generatePrize();
-            PrizeMatrix_t spinResult = generateSpinResult(m_prize);
+            /*m_prize = */generatePrize();
+            PrizeMatrix_t spinResult = generateSpinResult(*m_prize);
             for (int i = 0; i < 3; i++)
             {
                 m_bars[i]->showSpinResult(spinResult[i], m_rewardType);
@@ -228,7 +230,7 @@ void SlotMachine::nextState()
         break;
 
     case EMachineState::Win:
-        showPrize(m_prize);
+        showPrize(*m_prize);
         break;
 
     case EMachineState::End:
@@ -248,7 +250,7 @@ void SlotMachine::resetCallbacks()
     m_countdown = -1.0f;
 }
 
-SlotMachine::EPrize SlotMachine::generatePrize()
+SlotMachine::Prizes_t::const_iterator SlotMachine::generatePrize()
 {
     /*
     int count = static_cast<int>(EPrize::COUNT);
@@ -256,14 +258,13 @@ SlotMachine::EPrize SlotMachine::generatePrize()
     return static_cast<EPrize>(prize);
     */
 
-    uint16_t p = static_cast<uint16_t>(m_prize) + 1;
-    EPrize prize = static_cast<EPrize>(p);
-    if (prize == EPrize::COUNT)
+    m_prize++;
+    if (m_prize == m_prizeSequence.end())
     {
-        prize = EPrize::None;
+        m_prize = m_prizeSequence.begin();
     }
 
-    return prize;
+    return m_prize;
 }
 
 /* Method returns machine spin result 

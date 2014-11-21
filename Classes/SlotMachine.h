@@ -23,7 +23,7 @@ class SlotMachine : public cocos2d::Ref
 
     enum class EPrize : uint16_t
     {
-        None = 0,
+    	None = 0,
         C1k,
         C500k,
         C1000k,
@@ -33,6 +33,7 @@ class SlotMachine : public cocos2d::Ref
 
     typedef std::vector<int> PrizeBar_t;
     typedef std::vector<PrizeBar_t> PrizeMatrix_t;
+    typedef std::vector<EPrize> Prizes_t;
 
 public:
     static SlotMachine* create(gaf::GAFObject* mainObject);
@@ -71,8 +72,9 @@ private:
     void resetCallbacks();
 
     std::string getTextByPrize(EPrize prize);
-    EPrize m_prize;
-    EPrize generatePrize();
+    Prizes_t m_prizeSequence;
+    Prizes_t::const_iterator m_prize;
+    Prizes_t::const_iterator generatePrize();
     PrizeMatrix_t generateSpinResult(EPrize prize);
 
     float m_countdown;
