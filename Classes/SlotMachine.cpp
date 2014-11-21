@@ -1,3 +1,11 @@
+/****************************************************************************
+This class describes Slot Machine as Finite-state machine
+In different states we switch between subobjects sequences
+Also this class implements callbacks to be aware of sequence states
+
+http://gafmedia.com/
+****************************************************************************/
+
 #include "SlotMachine.h"
 #include "SlotBar.h"
 
@@ -40,12 +48,16 @@ bool SlotMachine::init(GAFObject* mainObject)
 
     auto obj = mainObject->getObjectByName("obj");
 
+    // Here we get pointers to inner Gaf objects for quick access
+    // We use flash object instance name
     m_arm = obj->getObjectByName("arm");
     m_whiteBG = obj->getObjectByName("white_exit");
     m_bottomCoins = obj->getObjectByName("wincoins");
     m_rewardText = obj->getObjectByName("wintext");
     m_winFrame = obj->getObjectByName("frame");
     m_spinningRays = obj->getObjectByName("spinning_rays");
+    // Sequence "start" will play once and callback SlotMachine::onFinishRaysSequence
+    // will be called when last frame of "start" sequence shown
     m_spinningRays->playSequence("start");
     m_spinningRays->setAnimationFinishedPlayDelegate(GAFAnimationStartedNextLoopDelegate_t(CC_CALLBACK_1(SlotMachine::onFinishRaysSequence, this)));
 
@@ -74,6 +86,10 @@ bool SlotMachine::init(GAFObject* mainObject)
     return true;
 }
 
+// General callback for sequences
+// Used by Finite-state machine
+// see setAnimationStartedNextLoopDelegate and setAnimationFinishedPlayDelegate
+// for looped and non-looped sequences
 void SlotMachine::onFinishSequence(gaf::GAFObject* object)
 {
     nextState();
@@ -137,13 +153,14 @@ void SlotMachine::switchType()
 
 void SlotMachine::defaultPlacing()
 {
+    // Here we set default sequences if needed
+    // Sequence names are used from flash labels
     m_whiteBG->gotoAndStop("whiteenter");
     m_winFrame->playSequence("stop");
     m_arm->playSequence("stop");
     m_bottomCoins->setVisible(false);
     m_bottomCoins->setLooped(false);
     m_rewardText->playSequence("notwin", true);
-    //m_spinningRays->playSequence("spin", true);
 
     for (int i = 0; i < 3; i++)
     {
@@ -152,10 +169,14 @@ void SlotMachine::defaultPlacing()
     for (int i = 0; i < 3; i++)
     {
         m_bars[i]->getBar()->playSequence("statics");
-        //m_bars[i]->randomizeSlots(s_fruitCount, m_rewardType);
     }
 }
 
+/* This method describes Finite-state machine
+ * state switches in 2 cases:
+ * 1) specific sequence ended playing and callback called
+ * 2) by timer
+ */
 void SlotMachine::nextState()
 {
     m_state = static_cast<EMachineState>(static_cast<uint16_t>(m_state) + 1);
@@ -245,6 +266,12 @@ SlotMachine::EPrize SlotMachine::generatePrize()
     return prize;
 }
 
+/* Method returns machine spin result 
+ *        4 3 1
+ *        2 2 2
+ *        1 1 5
+ * where numbers are fruit indexes
+ */
 SlotMachine::PrizeMatrix_t SlotMachine::generateSpinResult(EPrize prize)
 {
     PrizeMatrix_t result(3, PrizeBar_t(3));
@@ -295,6 +322,7 @@ SlotMachine::PrizeMatrix_t SlotMachine::generateSpinResult(EPrize prize)
     return result;
 }
 
+// Here we switching to win animation
 void SlotMachine::showPrize(EPrize prize)
 {
     std::string coinsBottomState = getTextByPrize(prize);
