@@ -344,7 +344,7 @@ void SlotMachine::showPrize(EPrize prize)
     m_centralCoins[idx]->setVisible(true);
     m_centralCoins[idx]->playSequence(m_rewardType, true);
 
-    m_countdown = 5.0f;
+    m_countdown = 2.0f;
 }
 
 std::string SlotMachine::getTextByPrize(EPrize prize)
