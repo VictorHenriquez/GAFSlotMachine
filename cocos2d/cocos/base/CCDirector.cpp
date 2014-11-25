@@ -1081,7 +1081,7 @@ void Director::showStats()
             _frames = 0;
             _accumDt = 0;
 
-            sprintf(buffer, "%.1f / %.3f", _frameRate, _secondsPerFrame);
+            sprintf(buffer, "%.1f", _frameRate);
             _FPSLabel->setString(buffer);
         }
 
@@ -1101,8 +1101,8 @@ void Director::showStats()
 
         Mat4 identity = Mat4::IDENTITY;
 
-        _drawnVerticesLabel->visit(_renderer, identity, 0);
-        _drawnBatchesLabel->visit(_renderer, identity, 0);
+        //_drawnVerticesLabel->visit(_renderer, identity, 0);
+        //_drawnBatchesLabel->visit(_renderer, identity, 0);
         _FPSLabel->visit(_renderer, identity, 0);
     }
 }
@@ -1160,13 +1160,13 @@ void Director::createStatsLabel()
      So I added a new method called 'setIgnoreContentScaleFactor' for 'AtlasNode',
      this is not exposed to game developers, it's only used for displaying FPS now.
      */
-    float scaleFactor = 1 / CC_CONTENT_SCALE_FACTOR();
+	float scaleFactor = 2 / _openGLView->getScaleX();//CC_CONTENT_SCALE_FACTOR();
 
     _FPSLabel = LabelAtlas::create();
     _FPSLabel->retain();
     _FPSLabel->setIgnoreContentScaleFactor(true);
     _FPSLabel->initWithString("00.0", texture, 12, 32 , '.');
-    _FPSLabel->setScale(scaleFactor);
+	_FPSLabel->setScale(scaleFactor);
 
     _drawnBatchesLabel = LabelAtlas::create();
     _drawnBatchesLabel->retain();
@@ -1183,7 +1183,7 @@ void Director::createStatsLabel()
 
     Texture2D::setDefaultAlphaPixelFormat(currentFormat);
 
-    const int height_spacing = 22 / CC_CONTENT_SCALE_FACTOR();
+    const int height_spacing = 22 * scaleFactor;
     _drawnVerticesLabel->setPosition(Vec2(0, height_spacing*2) + CC_DIRECTOR_STATS_POSITION);
     _drawnBatchesLabel->setPosition(Vec2(0, height_spacing*1) + CC_DIRECTOR_STATS_POSITION);
     _FPSLabel->setPosition(Vec2(0, height_spacing*0)+CC_DIRECTOR_STATS_POSITION);

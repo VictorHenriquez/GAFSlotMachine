@@ -21,7 +21,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     glview->setDesignResolutionSize(1080, 1920, ResolutionPolicy::FIXED_WIDTH);
 
-    //director->setDisplayStats(true);
+    director->setDisplayStats(true);
     director->setAnimationInterval(1.0 / 60);
 
     auto scene = SlotScene::createScene();
