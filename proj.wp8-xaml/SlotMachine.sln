@@ -1,5 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlotMachine", "App\SlotMachine.csproj", "{83CC88FE-7E79-4E1E-A129-742987130B5C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SlotMachineComponent", "AppComponent\SlotMachineComponent.vcxproj", "{60EC6889-C3C4-45AD-A006-47D9EE689212}"
@@ -25,6 +27,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Box2D", "..\cocos2d\external\Box2D\proj.wp8\Box2D.vcxproj", "{C55734A3-702C-4FA1-B950-32C8E169302F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libNetwork", "..\cocos2d\cocos\network\proj.wp8\libNetwork.vcxproj", "{7DAA99E7-8E07-4FEF-8374-8EC04E395D2E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GAFPlayer", "..\cocos2d\external\GAFPlayer\Library\proj.wp8\GAFPlayer.vcxproj", "{BA4C3D1B-4852-489F-BAC4-889E0BBE36D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -286,6 +290,24 @@ Global
 		{7DAA99E7-8E07-4FEF-8374-8EC04E395D2E}.Release|Win32.Build.0 = Release|Win32
 		{7DAA99E7-8E07-4FEF-8374-8EC04E395D2E}.Release|x86.ActiveCfg = Release|Win32
 		{7DAA99E7-8E07-4FEF-8374-8EC04E395D2E}.Release|x86.Build.0 = Release|Win32
+		{BA4C3D1B-4852-489F-BAC4-889E0BBE36D9}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{BA4C3D1B-4852-489F-BAC4-889E0BBE36D9}.Debug|ARM.ActiveCfg = Debug|ARM
+		{BA4C3D1B-4852-489F-BAC4-889E0BBE36D9}.Debug|ARM.Build.0 = Debug|ARM
+		{BA4C3D1B-4852-489F-BAC4-889E0BBE36D9}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{BA4C3D1B-4852-489F-BAC4-889E0BBE36D9}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{BA4C3D1B-4852-489F-BAC4-889E0BBE36D9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BA4C3D1B-4852-489F-BAC4-889E0BBE36D9}.Debug|Win32.Build.0 = Debug|Win32
+		{BA4C3D1B-4852-489F-BAC4-889E0BBE36D9}.Debug|x86.ActiveCfg = Debug|Win32
+		{BA4C3D1B-4852-489F-BAC4-889E0BBE36D9}.Debug|x86.Build.0 = Debug|Win32
+		{BA4C3D1B-4852-489F-BAC4-889E0BBE36D9}.Release|Any CPU.ActiveCfg = Release|Win32
+		{BA4C3D1B-4852-489F-BAC4-889E0BBE36D9}.Release|ARM.ActiveCfg = Release|ARM
+		{BA4C3D1B-4852-489F-BAC4-889E0BBE36D9}.Release|ARM.Build.0 = Release|ARM
+		{BA4C3D1B-4852-489F-BAC4-889E0BBE36D9}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{BA4C3D1B-4852-489F-BAC4-889E0BBE36D9}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{BA4C3D1B-4852-489F-BAC4-889E0BBE36D9}.Release|Win32.ActiveCfg = Release|Win32
+		{BA4C3D1B-4852-489F-BAC4-889E0BBE36D9}.Release|Win32.Build.0 = Release|Win32
+		{BA4C3D1B-4852-489F-BAC4-889E0BBE36D9}.Release|x86.ActiveCfg = Release|Win32
+		{BA4C3D1B-4852-489F-BAC4-889E0BBE36D9}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
