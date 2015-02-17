@@ -60,7 +60,7 @@ bool SlotMachine::init(GAFObject* mainObject)
     m_spinningRays = obj->getObjectByName("spinning_rays");
     // Sequence "start" will play once and callback SlotMachine::onFinishRaysSequence
     // will be called when last frame of "start" sequence shown
-    m_spinningRays->playSequence("start");
+    m_spinningRays->playSequence("start", false);
     m_spinningRays->setAnimationFinishedPlayDelegate(GAFAnimationStartedNextLoopDelegate_t(CC_CALLBACK_1(SlotMachine::onFinishRaysSequence, this)));
 
     for (int i = 0; i < 3; i++)
@@ -158,8 +158,8 @@ void SlotMachine::defaultPlacing()
     // Here we set default sequences if needed
     // Sequence names are used from flash labels
     m_whiteBG->gotoAndStop("whiteenter");
-    m_winFrame->playSequence("stop");
-    m_arm->playSequence("stop");
+    m_winFrame->playSequence("stop", true);
+    m_arm->playSequence("stop", false);
     m_bottomCoins->setVisible(false);
     m_bottomCoins->setLooped(false);
     m_rewardText->playSequence("notwin", true);
@@ -170,7 +170,7 @@ void SlotMachine::defaultPlacing()
     }
     for (int i = 0; i < 3; i++)
     {
-        m_bars[i]->getBar()->playSequence("statics");
+        m_bars[i]->getBar()->playSequence("statics", true);
     }
 }
 
@@ -196,12 +196,12 @@ void SlotMachine::nextState()
         break;
 
     case EMachineState::ArmTouched:
-        m_arm->playSequence("push");
+        m_arm->playSequence("push", false);
         m_arm->setAnimationFinishedPlayDelegate(GAFAnimationStartedNextLoopDelegate_t(CC_CALLBACK_1(SlotMachine::onFinishSequence, this)));
         break;
 
     case EMachineState::Spin:
-        m_arm->playSequence("stop");
+        m_arm->playSequence("stop", false);
 
         for (int i = 0; i < 3; i++)
         {
