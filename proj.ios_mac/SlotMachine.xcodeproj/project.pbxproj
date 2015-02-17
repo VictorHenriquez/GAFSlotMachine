@@ -63,6 +63,13 @@
 		50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF629517ECD46A001EB2F8 /* Icon-100.png */; };
 		50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF62A017ECD613001EB2F8 /* Icon-29.png */; };
 		50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF62A117ECD613001EB2F8 /* Icon-50.png */; };
+		B65F7D701A9377AC00D70019 /* SlotScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29BAB0391A1A2CFF005DC6AD /* SlotScene.cpp */; };
+		B65F7D761A9377AF00D70019 /* SlotBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29ACCB8A1A14E62500720B08 /* SlotBar.cpp */; };
+		B65F7D771A9377B200D70019 /* SlotMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29ACCB8C1A14E62500720B08 /* SlotMachine.cpp */; };
+		B65F7D781A9377FA00D70019 /* libgafplayer Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B65F7D751A9377AC00D70019 /* libgafplayer Mac.a */; };
+		B65F7D791A93789500D70019 /* slot_machine in Resources */ = {isa = PBXBuildFile; fileRef = 29BAB03C1A1A361E005DC6AD /* slot_machine */; };
+		B65F7D7A1A93789A00D70019 /* btn_swap.png in Resources */ = {isa = PBXBuildFile; fileRef = 29A670EA1A1F444200729523 /* btn_swap.png */; };
+		B65F7D7B1A93789D00D70019 /* btn_swap_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 29A670E91A1F444200729523 /* btn_swap_down.png */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -227,6 +234,13 @@
 			remoteGlobalIDString = 1A2FBEC0192DEF8700631FE9;
 			remoteInfo = gafplayer;
 		};
+		B65F7D741A9377AC00D70019 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29ACCB841A14E59E00720B08 /* GAFPlayer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 29CC58251A36113E00B31D72;
+			remoteInfo = "gafplayer Mac";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -318,6 +332,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B65F7D781A9377FA00D70019 /* libgafplayer Mac.a in Frameworks */,
 				1AC6FB1F180E996B004C840B /* libbox2d Mac.a in Frameworks */,
 				1AC6FB20180E996B004C840B /* libchipmunk Mac.a in Frameworks */,
 				1AC6FB21180E996B004C840B /* libcocos2dx Mac.a in Frameworks */,
@@ -401,6 +416,7 @@
 			isa = PBXGroup;
 			children = (
 				29ACCB891A14E59E00720B08 /* libgafplayer.a */,
+				B65F7D751A9377AC00D70019 /* libgafplayer Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -668,6 +684,13 @@
 			remoteRef = 29ACCB881A14E59E00720B08 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		B65F7D751A9377AC00D70019 /* libgafplayer Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libgafplayer Mac.a";
+			remoteRef = B65F7D741A9377AC00D70019 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -702,7 +725,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B65F7D7B1A93789D00D70019 /* btn_swap_down.png in Resources */,
 				503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */,
+				B65F7D7A1A93789A00D70019 /* btn_swap.png in Resources */,
+				B65F7D791A93789500D70019 /* slot_machine in Resources */,
 				5087E75517EB910900C73F5D /* HelloWorld.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -728,8 +754,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B65F7D771A9377B200D70019 /* SlotMachine.cpp in Sources */,
 				5087E75717EB910900C73F5D /* AppDelegate.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
+				B65F7D701A9377AC00D70019 /* SlotScene.cpp in Sources */,
+				B65F7D761A9377AF00D70019 /* SlotBar.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -883,6 +912,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../cocos2d/cocos/platform/mac",
 					"$(SRCROOT)/../cocos2d/external/glfw3/include/mac",
+					"\"$(SRCROOT)/../cocos2d/external/GAFPlayer/Library/Sources\"",
 				);
 				INFOPLIST_FILE = mac/Info.plist;
 				LIBRARY_SEARCH_PATHS = "";
@@ -910,6 +940,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../cocos2d/cocos/platform/mac",
 					"$(SRCROOT)/../cocos2d/external/glfw3/include/mac",
+					"\"$(SRCROOT)/../cocos2d/external/GAFPlayer/Library/Sources\"",
 				);
 				INFOPLIST_FILE = mac/Info.plist;
 				LIBRARY_SEARCH_PATHS = "";
